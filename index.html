@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ali errahmany CCN01 Partie01</title>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"> <!-- Custom styles (optional) -->
+</head>
+<body>
+  <h1 class="text-center"> Commande de Pizza </h1>
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-between">
+            <!-- Form Section -->
+            <div class="col-md-5">
+                <fieldset class="border p-3 rounded">
+                    <legend class="w-auto">Votre PIZZA</legend>
+                    <form id="pizzaForm">
+                        <div class="mb-3">
+                            <label for="nomClient" class="form-label">Nom de client</label>
+                            <input id="nomClient" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Adresse du client</label>
+                            <input id="AdresseClient" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="choisiPizza" class="form-label">Choisissez une pizza</label>
+                            <select name="choisiPizza" id="choisiPizza" class="form-select" required>
+                                <option value="">Choisissez une pizza</option>
+                                <option value="P01" data-price="80">Pizza 4 fromages (80DH)</option>
+                                <option value="P02" data-price="120">Pizza Viande Hachée (120DH)</option>
+                                <option value="P03" data-price="75">Pizza Herbo (75DH)</option>
+                                <option value="P04" data-price="120">Pizza Fruits de mer (120DH)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Qualite" class="form-label">Quantité:</label>
+                            <input type="number" id="Qualite" class="form-control" min="1" max="10" required>
+                        </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <button type="button" class="btn btn-primary" onclick="ajouter()">Ajouter</button>
+                            <button type="reset" class="btn btn-danger">Annuler</button>
+                        </div>
+                       
+                       
+                    </form>
+                </fieldset>
+            </div>
+            
+            <!-- Table Section -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Liste des Pizzas Commandées</h5>
+                        <table id="produits-table" class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nom pizza</th>
+                                    <th>Prix Unitaire</th>
+                                    <th>Quantité</th>
+                                </tr>
+                            </thead>
+                            <tbody id="produits-table-body"></tbody>
+                        </table>
+                        <div id="montantTotalContainer" class="mt-4 text-center">
+                          <h3 id="montantTotalTitle">Le montant total est : 0 DH</h3>
+                      </div>
+                      <hr>
+                      <form id="paiementForm">
+                        <label for="paiement">Paiement par :</label><br>
+                        
+                        <input type="radio" id="cb" name="paiement" value="cb" onchange="gererPaiement()" required>
+                        <label for="cb">Carte Bancaire</label><br>
+                        
+                        <input type="radio" id="cheque" name="paiement" value="cheque" onchange="gererPaiement()" required>
+                        <label for="cheque">Chèque</label><br><br>
+                    
+                        <label for="numCarteBancaire">Numéro de la carte bancaire :</label>
+                        <input type="text" name="numCarteBancaire" id="numCarteBancaire" class="form-control" required><br><br>
+                         
+                        <label for="montantTotal" class="form-label">Merci pour votre visite. Le montant total est :</label>
+                        <input type="text" name="montantTotal" id="montantTotal" class="form-control" readonly>
+                        <br>
+                        <button type="button" onclick="afficherPopup()" class=" btn btn-primary">Envoyer</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="popup" class="popup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+        <div  class="popup-content">
+                    <h5 class="modal-title" id="popupLabel">Détails de la Commande</h5>
+                    <button type="button" class="close" onclick="fermerPopup()" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                    <div id="detailsCommande"></div>  
+                    <button type="button" class="btn btn-secondary" onclick="fermerPopup()">Quitter</button>
+                    <button type="button" class="btn btn-primary" onclick="imprimerCommande()">Imprimer</button> 
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
